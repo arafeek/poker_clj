@@ -23,7 +23,15 @@
     (is (= (sort-cards [[:ace :spades]]) [[:ace :spades]])))
   (testing "sort-cards, should work on lists of length > 1"
     (is (= (sort-cards [[2 :hearts] [5 :diamonds] [3 :hearts] [:ace :spades]])
-           [[:ace :spades] [5 :diamonds] [3 :hearts] [2 :hearts]])))
+           [[2 :hearts] [3 :hearts] [5 :diamonds] [:ace :spades]])))
   (testing "sort-cards, should work on lists too"
-    (is (= (sort-cards '('(2 :hearts) '(5 :diamonds) '(3 :hearts) '(:ace :spades)))
-           '('(:ace :spades) '(5 :diamonds) '(3 :hearts) '(2 :hearts))))))
+    (is (= (sort-cards (list
+                         (list 2 :hearts)
+                         (list 5 :diamonds)
+                         (list 3 :hearts)
+                         (list :ace :spades)))
+           (list
+             (list 2 :hearts)
+             (list 3 :hearts)
+             (list 5 :diamonds)
+             (list :ace :spades))))))

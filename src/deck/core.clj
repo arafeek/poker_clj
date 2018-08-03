@@ -46,6 +46,6 @@
     (get card-ranks v)))
 
 (defn sort-cards
-  "Takes a collection of cards and returns them in descending order by rank, ignoring suits"
+  "Takes a collection of cards and returns them in ascending order"
   [cards]
-  (reverse (sort-by rank cards)))
+  (sort-by rank cards))
