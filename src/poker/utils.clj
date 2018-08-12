@@ -21,3 +21,27 @@
   "Takes a collection of cards, returns a map of the frequencies that the card ranks appear"
   [cards]
   (frequencies (map deck/value cards)))
+
+
+;; Non poker specific util functions
+
+(defn all-n-elem-subsets
+  "Returns all subsets of size n from a list of elements"
+  [n lst]
+  (if (= n 1)
+    (map vector lst)
+    (apply concat
+           (map-indexed
+             #(map (fn [x] (conj x %2))
+                   (all-n-elem-subsets (dec n) (drop (inc %1) lst)))
+             lst))))
+
+(defn lcross-prod
+  "Returns the cross product of two lists of lists as a flat vector"
+  [l1 l2]
+  (for [x l1 y l2] (concat x y)))
+
+(defn cross-prod
+  "Returns the cross product of two lists"
+  [l1 l2]
+  (for [x l1 y l2] [x y]))

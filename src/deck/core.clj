@@ -49,3 +49,11 @@
   "Takes a collection of cards and returns them in ascending order"
   [cards]
   (sort-by rank cards))
+
+(defn remove-cards
+  "Takes a collection of cards representing a deck and a list of cards to remove,
+  returns a new collection without the cards in the list"
+  [deck to-remove]
+  (if (empty? to-remove)
+    deck
+    (filter #(not (contains? (set to-remove) %)) deck)))

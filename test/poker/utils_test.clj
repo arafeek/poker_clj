@@ -51,3 +51,15 @@
   (testing "Testing: value-histogram"
     (is
       (= (value-histogram one-pair) {:king 2, 2 1, 7 1, 5 1}))))
+
+(deftest all-n-elem-subset-tests
+  (testing "Testing: all-n-elem-subsets"
+    (is
+      (= (count (all-n-elem-subsets 2 [1 2 3 4])) 6)
+      "4 choose 2 = 6")
+    (is 
+      (= (count (all-n-elem-subsets 4 [1 2 3 4])) 1)
+      "4 choose 4 = 1")
+    (is
+      (= (count (all-n-elem-subsets 1 [1 2 3 4 5 6])) 6)
+      "6 choose 1 = 6")))

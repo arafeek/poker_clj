@@ -35,3 +35,22 @@
              (list 3 :hearts)
              (list 5 :diamonds)
              (list :ace :spades))))))
+
+(deftest remove-cards-test
+  (testing "Testing: remove-cards"
+    (is (=
+          (remove-cards [[:ace :clubs] [7 :hearts] [10 :diamonds]] [])
+          [[:ace :clubs] [7 :hearts] [10 :diamonds]])
+        "Should work with an empty to-remove list")
+    (is (=
+          (remove-cards [[:ace :clubs] [7 :hearts] [10 :diamonds]] [[7 :hearts]])
+          [[:ace :clubs] [10 :diamonds]])
+        "Should work with to-remove of length 1")
+    (is (=
+          (remove-cards [[:ace :clubs] [7 :hearts] [10 :diamonds]] [[7 :hearts] [10 :diamonds]])
+          [[:ace :clubs]])
+        "Should work with longer to-remove-lists")
+    (is (=
+          (remove-cards [[:ace :clubs] [7 :hearts] [10 :diamonds]] [[7 :hearts] [10 :diamonds] [:ace :clubs]])
+          [])
+        "Should work if we remove all cards from the deck")))
