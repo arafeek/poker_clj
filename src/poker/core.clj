@@ -3,11 +3,12 @@
   (:require [deck.core :as deck]
             [poker.utils :as utils]))
 
+;; TODO: this function needs some work, getting a lot of edge cases
 (defn- compare-high-cards
   "A helper function that takes two hands that are assumed to be flushes in desc sorted order
   and compares them. Returns 1 if h1 is greater, -1 if h2 is greater and 0 if h1 = h2"
   [hr1 hr2]
-  (if-not (= (count hr1) (count hr2))
+  (if-not (and (> (count hr1) 0) (= (count hr1) (count hr2)))
     (throw (Exception. "Cannot compare high cards of hands of different type"))
     (loop [r1 hr1
            r2 hr2]

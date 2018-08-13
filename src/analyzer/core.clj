@@ -11,7 +11,7 @@
          p2-wins 0
          ties 0]
     (if (empty? to-eval)
-      '(p1-wins p2-wins ties)
+      (list p1-wins p2-wins ties)
       (let [h1 (o/get-best-hand p1 (concat board (first to-eval)))
             h2 (o/get-best-hand p2 (concat board (first to-eval)))
             result (p/compare-hands h1 h2)]
@@ -33,7 +33,8 @@
       (let [winner (p/compare-hands
                      (o/get-best-hand p1 board)
                      (o/get-best-hand p2 board))]
-        '((if (= winner 1) 100 0)
-          (if (= winner -1) 100 0)
-          (if (= winner 0) 100 0)))
+        (cond
+          (= winner 1) '(1 0 0)
+          (= winner -1) '(0 1 0)
+          :else '(0 0 1)))
       (eval-runouts p1 p2 board (u/all-n-elem-subsets num-cards-to-deal deck)))))
