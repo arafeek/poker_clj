@@ -7,13 +7,15 @@
   "A helper function that takes two hands that are assumed to be flushes in desc sorted order
   and compares them. Returns 1 if h1 is greater, -1 if h2 is greater and 0 if h1 = h2"
   [hr1 hr2]
-  (loop [r1 hr1
-         r2 hr2]
-    (cond
-      (empty? r1) 0 ;; if we hit the end, hands must be equal
-      (> (first r1) (first r2)) 1
-      (< (first r1) (first r2)) -1
-      :else (recur (rest r1) (rest r2)))))
+  (if-not (= (count hr1) (count hr2))
+    (throw (Exception. "Cannot compare high cards of hands of different type"))
+    (loop [r1 hr1
+           r2 hr2]
+      (cond
+        (empty? r1) 0
+        (> (first r1) (first r2)) 1
+        (< (first r1) (first r2)) -1
+        :else (recur (rest r1) (rest r2))))))
 
 (defn- compare-straights
   [hr1 hr2]
@@ -73,7 +75,8 @@
       (= valueCounts [1 1 3]) :three-of-a-kind
       (= valueCounts [1 2 2]) :two-pair
       (= valueCounts [1 1 1 2]) :one-pair
-      :else :high-card)))
+      (= valueCounts [1 1 1 1 1]) :high-card
+      :else nil)))
 
 (defn compare-hands
   "Returns 1 if h1 > h2, -1 if h2 > h1 and 0 if h1 = h2 in terms of strength"
@@ -82,6 +85,9 @@
     (let [r1 (rank-hand h1)
           r2 (rank-hand h2)]
       (cond
+        (nil? r1) -1
+        (nil? r2) 1
+        (and (nil? r1) (nil? r2)) 0
         (> (r1 hand-ranks) (r2 hand-ranks)) 1
         (< (r1 hand-ranks) (r2 hand-ranks)) -1
         :else (let [s1 (reverse (map deck/rank (deck/sort-cards h1)))

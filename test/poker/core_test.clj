@@ -34,4 +34,6 @@
     (is (= (compare-hands quads quads) 0) "quads = quads")
     (is (= (compare-hands quads quad-2s) 1) "AAAAT > 2222K")
     (is (= (compare-hands k-high-card high-card) -1) "K-high < A-high")
-    (is (= (compare-hands reg-flush ak-flush) -1) "AT flush < AK flush")))
+    (is (= (compare-hands reg-flush ak-flush) -1) "AT flush < AK flush")
+    (is (= (compare-hands one-pair nil) 1) "Testing nil second arg")
+    (is (= (compare-hands quads) 1) "Testing with one argument supplied")))
