@@ -26,4 +26,4 @@
         curr-best
         (if (= (p/compare-hands (first hands) curr-best) 1)
           (recur (rest hands) (first hands))
-          (recur (rest hands) (curr-best)))))))
+          (recur (rest hands) curr-best))))))

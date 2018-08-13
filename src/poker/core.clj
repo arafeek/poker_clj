@@ -58,7 +58,7 @@
 
 ;; Expects a list containing only 5 cards
 ;; It is the onus of the calling function to decide which 5 cards to evaluate
-(defn evaluate
+(defn rank-hand
   "Takes a list of 5 cards, returns the value of the best possible poker hand it forms"
   [cards]
   (let [valueCounts (sort (vals (utils/value-histogram cards))) ;; get a list that represents the number of repeated values in the hand eg [2 3] => full house
@@ -79,8 +79,8 @@
   "Returns 1 if h1 > h2, -1 if h2 > h1 and 0 if h1 = h2 in terms of strength"
   ([h1] 1)
   ([h1 h2]
-    (let [r1 (evaluate h1)
-          r2 (evaluate h2)]
+    (let [r1 (rank-hand h1)
+          r2 (rank-hand h2)]
       (cond
         (> (r1 hand-ranks) (r2 hand-ranks)) 1
         (< (r1 hand-ranks) (r2 hand-ranks)) -1

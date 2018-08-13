@@ -15,17 +15,17 @@
 (def high-card [[10 :clubs] [:jack :hearts] [9 :spades] [:ace :clubs] [2 :spades]])
 (def k-high-card [[10 :clubs] [:jack :hearts] [9 :spades] [:king :clubs] [2 :spades]])
 
-(deftest evaluate-tests
-  (testing "Testing: evaluate"
-    (is (= (evaluate straight-flush) :straight-flush) "Straight flush")
-    (is (= (evaluate quads) :four-of-a-kind) "Four of a kind")
-    (is (= (evaluate full-house) :full-house) "Full house")
-    (is (= (evaluate reg-flush) :flush) "Flush")
-    (is (= (evaluate straight) :straight) "Straight")
-    (is (= (evaluate three-of-a-kind) :three-of-a-kind) "Three of a kind")
-    (is (= (evaluate two-pair) :two-pair) "Two pair")
-    (is (= (evaluate one-pair) :one-pair) "One Pair")
-    (is (= (evaluate high-card) :high-card) "High card")))
+(deftest rank-hand-tests
+  (testing "Testing: rank-hand"
+    (is (= (rank-hand straight-flush) :straight-flush) "Straight flush")
+    (is (= (rank-hand quads) :four-of-a-kind) "Four of a kind")
+    (is (= (rank-hand full-house) :full-house) "Full house")
+    (is (= (rank-hand reg-flush) :flush) "Flush")
+    (is (= (rank-hand straight) :straight) "Straight")
+    (is (= (rank-hand three-of-a-kind) :three-of-a-kind) "Three of a kind")
+    (is (= (rank-hand two-pair) :two-pair) "Two pair")
+    (is (= (rank-hand one-pair) :one-pair) "One Pair")
+    (is (= (rank-hand high-card) :high-card) "High card")))
 
 (deftest compare-hand-tests
   (testing "Testing: compare-hands"
