@@ -25,6 +25,11 @@
 
 ;; Non poker specific util functions
 
+(defn sample
+  "Randomly samples n elements from a collection with replacement"
+  [n coll]
+  (repeatedly n #(rand-nth coll)))
+
 (defn all-n-elem-subsets
   "Returns all subsets of size n from a list of elements"
   [n lst]
