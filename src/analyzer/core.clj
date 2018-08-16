@@ -7,32 +7,36 @@
 (defn eval-n-runouts
   "Randomly evaluates n runouts"
   [n p1 p2 board deck]
-  (let [runouts (u/all-n-elem-subsets (- 5 (count board)) deck)]
-    (loop [to-eval (if (>= n (count runouts)) runouts (u/sample n runouts))
+  (let [num-cards-to-deal (- 5 (count board))]
+    (loop [runout (u/sample num-cards-to-deal deck) ;; get a random runout from the remaining deck
            p1-wins 0
            p2-wins 0
            ties 0
            num-trials 0]
-      (if (or (empty? to-eval) (= n (dec num-trials)))
+      ;; We always do n trials
+      ;; NOTE: this could be inefficient if n > total number of possible runouts
+      ;; since it will sample with replacement
+      ;; TODO: fix that
+      (if (= n (dec num-trials))
         (list p1-wins p2-wins ties)
-        (let [h1 (o/get-best-hand p1 (concat board (first to-eval)))
-              h2 (o/get-best-hand p2 (concat board (first to-eval)))
+        (let [h1 (o/get-best-hand p1 (concat board runout))
+              h2 (o/get-best-hand p2 (concat board runout))
               result (p/compare-hands h1 h2)]
           (cond
             (= result 1) (recur
-                           (rest to-eval)
+                           (u/sample num-cards-to-deal deck) ;; generate a new runout
                            (inc p1-wins)
                            p2-wins
                            ties
                            (inc num-trials))
             (= result -1) (recur
-                            (rest to-eval)
+                            (u/sample num-cards-to-deal deck)
                             p1-wins
                             (inc p2-wins)
                             ties
                             (inc num-trials))
             :else (recur
-                    (rest to-eval)
+                    (u/sample num-cards-to-deal deck)
                     p1-wins
                     p2-wins
                     (inc ties)
@@ -92,4 +96,4 @@
           (= winner 1) '(1 0 0)
           (= winner -1) '(0 1 0)
           :else '(0 0 1)))
-      (eval-n-runouts 1000 p1 p2 board deck))))
+      (eval-n-runouts 5000 p1 p2 board deck))))

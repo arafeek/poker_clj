@@ -28,7 +28,7 @@
 (defn sample
   "Randomly samples n elements from a collection with replacement"
   [n coll]
-  (repeatedly n #(rand-nth coll)))
+  (take n (shuffle coll)))
 
 (defn all-n-elem-subsets
   "Returns all subsets of size n from a list of elements"
