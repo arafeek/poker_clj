@@ -17,7 +17,7 @@
       ;; NOTE: this could be inefficient if n > total number of possible runouts
       ;; since it will sample with replacement
       ;; TODO: fix that
-      (if (= n (dec num-trials))
+      (if (= (inc n) num-trials)
         (list p1-wins p2-wins ties)
         (let [h1 (o/get-best-hand p1 (concat board runout))
               h2 (o/get-best-hand p2 (concat board runout))

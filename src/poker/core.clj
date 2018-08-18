@@ -91,6 +91,7 @@
         (and (nil? r1) (nil? r2)) 0
         (> (r1 hand-ranks) (r2 hand-ranks)) 1
         (< (r1 hand-ranks) (r2 hand-ranks)) -1
+        ;; case where h1 and h2 are the same type of hand
         :else (let [s1 (reverse (map deck/rank (deck/sort-cards h1)))
                     s2 (reverse (map deck/rank (deck/sort-cards h2)))]
                 (cond
