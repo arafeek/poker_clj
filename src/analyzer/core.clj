@@ -97,3 +97,11 @@
           (= winner -1) '(0 1 0)
           :else '(0 0 1)))
       (eval-n-runouts 5000 p1 p2 board deck))))
+
+
+;; TODO: write this
+(defn calc-game-tree
+  "Returns a LoL representing all posible remaining game states given a starting game state.
+  Generates and returns a tree that contains all possible remaining board states"
+  [board dead & hands]
+  nil)
