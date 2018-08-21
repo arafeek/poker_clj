@@ -6,8 +6,11 @@
 
 (defn eval-n-runouts
   "Randomly evaluates n runouts"
-  [n p1 p2 board deck]
-  (let [num-cards-to-deal (- 5 (count board))]
+  [n p1 p2 board]
+  (let [num-cards-to-deal (- 5 (count board))
+        deck (d/remove-cards
+                          (d/make-deck)
+                          (concat p1 p2 board))]
     (loop [runout (u/sample num-cards-to-deal deck) ;; get a random runout from the remaining deck
            p1-wins 0
            p2-wins 0
@@ -56,11 +59,22 @@
             h2 (o/get-best-hand p2 (concat board (first to-eval)))
             result (p/compare-hands h1 h2)]
         (cond
-          (= result 1) (recur (rest to-eval) (inc p1-wins) p2-wins ties)
-          (= result -1) (recur (rest to-eval) p1-wins (inc p2-wins) ties)
-          :else (recur (rest to-eval) p1-wins p2-wins (inc ties)))))))
+          (= result 1) (recur
+                         (rest to-eval)
+                         (inc p1-wins)
+                         p2-wins ties)
+          (= result -1) (recur
+                          (rest to-eval)
+                          p1-wins
+                          (inc p2-wins)
+                          ties)
+          :else (recur
+                  (rest to-eval)
+                  p1-wins
+                  p2-wins
+                  (inc ties)))))))
 
-(defn get-hand-equities
+(defn calc-exact-hand-equities
   "Takes two hands and a board(0 - 5 cards) and evaluates all possible runouts
   keeping track of the outcomes. Returns a 3-tuple containing the equity results
   for the two hands in the form (<h1-win> <h2-win> <tie>)"
@@ -79,7 +93,7 @@
           :else '(0 0 1)))
       (eval-runouts p1 p2 board (u/all-n-elem-subsets num-cards-to-deal deck)))))
 
-(defn get-hand-equities2
+(defn calc-hand-equities
   "Takes two hands and a board(0 - 5 cards) and evaluates all possible runouts
   keeping track of the outcomes. Returns a 3-tuple containing the equity results
   for the two hands in the form (<h1-win> <h2-win> <tie>)"
@@ -96,12 +110,5 @@
           (= winner 1) '(1 0 0)
           (= winner -1) '(0 1 0)
           :else '(0 0 1)))
-      (eval-n-runouts 5000 p1 p2 board deck))))
+      (eval-n-runouts 3300 p1 p2 board))))
 
-
-;; TODO: write this
-(defn calc-game-tree
-  "Returns a LoL representing all posible remaining game states given a starting game state.
-  Generates and returns a tree that contains all possible remaining board states"
-  [board dead & hands]
-  nil)
